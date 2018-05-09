@@ -5,7 +5,8 @@ var gulp = require('gulp')
   ,htmlReplace = require('gulp-html-replace')
   ,uglify = require('gulp-uglify')
   ,usemin = require('gulp-usemin')
-  ,cssmin = require('gulp-cssmin');
+  ,cssmin = require('gulp-cssmin')
+  ,browserSync = require('browser-sync');
 
 gulp.task('default', ['copy'], function() {
     gulp.start('build-img', 'usemin');
@@ -31,8 +32,19 @@ gulp.task('build-img', function() {
 gulp.task('usemin', function() {
   return gulp.src('dist/**/*.html')
     .pipe(usemin({
-      js: [uglify()],
-      css: [cssmin()]
+      js: [uglify],
+      css: [cssmin]
     }))
     .pipe(gulp.dest('dist'));
+});
+
+gulp.task('server', function() {
+    browserSync.init({
+        server: {
+            baseDir: 'src'
+        }
+    });
+
+    gulp.watch('src/**/*').on('change', browserSync.reload);   
+
 });
