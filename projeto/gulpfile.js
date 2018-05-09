@@ -7,3 +7,5 @@ gulp.task('build-img', function() {
     .pipe(imagemin())
     .pipe(gulp.dest('src/img'));
 });
+
+
